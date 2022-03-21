@@ -4,7 +4,11 @@ In der ersten Aufgabe soll die **Web-Oberfläche** der GT-App entstehen. Dazu ge
 
 Die Aufgabe vertieft den Umgang mit **HTML** und besonders mit **HTML-Formularen** und zeigt deren Zusammenhang mit **CSS3** durch verschiedene **Selektoren** sowie die Funktionsweise von **Flexbox**.
 
+<<<<<<< HEAD
 ## Vorbereitung hallo2
+=======
+## Vorbereitung test
+>>>>>>> 386700e4ef085695ea7051ba3708968e0cb3d879
 
 Für die Aufgabe existieren schon Templates auf
 **[GitHub](https://guides.github.com/activities/hello-world/)**:
@@ -70,6 +74,7 @@ Commits sind feste Zwischenstände im Repository, zu denen sie immer wieder zur�
 ### A.2. Teilaufgaben
 
 #### Formularstruktur
+sss
 
 Im Template fehlen noch die Formulare. Diese sollen nun erstellt werden.
 
