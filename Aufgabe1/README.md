@@ -4,7 +4,7 @@ In der ersten Aufgabe soll die **Web-Oberfläche** der GT-App entstehen. Dazu ge
 
 Die Aufgabe vertieft den Umgang mit **HTML** und besonders mit **HTML-Formularen** und zeigt deren Zusammenhang mit **CSS3** durch verschiedene **Selektoren** sowie die Funktionsweise von **Flexbox**.
 
-## Vorbereitung test
+## Vorbereitung 
 
 Für die Aufgabe existieren schon Templates auf
 **[GitHub](https://guides.github.com/activities/hello-world/)**:
