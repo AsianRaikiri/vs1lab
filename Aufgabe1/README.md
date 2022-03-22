@@ -70,7 +70,6 @@ Commits sind feste Zwischenst√§nde im Repository, zu denen sie immer wieder zur√
 ### A.2. Teilaufgaben
 
 #### Formularstruktur
-sss
 
 Im Template fehlen noch die Formulare. Diese sollen nun erstellt werden.
 

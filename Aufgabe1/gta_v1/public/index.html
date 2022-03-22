@@ -14,7 +14,7 @@
 
 <body>
     <header class="header">
-        <img src="./images/location.png" class="header__image" alt="an image of a map and location">
+        <img src="./images/location.png" class="header__image" alt="an image of a map and location" height="250" width="250">
         <h1 class="header__title">GeoTagApp</h1>
         <nav class="header__navigation">
             <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
@@ -27,6 +27,20 @@
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
+                <div class="form-field">
+                    <label for="latitudeInputField">Latitude</label>
+                    <input name="latitudeInput" type="text" readonly id="latitudeInputField">
+                </div>
+                <div class="form-field">
+                    <label for="longitudeInputField">Longitude</label>
+                    <input name="longitudeInput" type="text" readonly id="longitudeInputField">
+                </div>
+                <div class="form-field">
+                    <label for="nameInputField">Name</label>
+                    <input name=nameInput" type="text" id="nameInputField">
+                </div>
+
+
 
                 <!-- ... your code here ... -->
 

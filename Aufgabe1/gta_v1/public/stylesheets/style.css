@@ -120,6 +120,12 @@ a {
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
+.form-field {
+  padding: 10px 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
 
 
 /* ### TODO ### Styles for Discovery component */
