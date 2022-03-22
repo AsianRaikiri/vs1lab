@@ -8,9 +8,9 @@ Die Aufgabe vertieft den Umgang mit **HTML** und besonders mit **HTML-Formularen
 ## Vorbereitung 
 =======
 <<<<<<< HEAD
-## Vorbereitung hallo2
+## Vorbereitung
 =======
-## Vorbereitung test
+## Vorbereitung
 >>>>>>> 386700e4ef085695ea7051ba3708968e0cb3d879
 >>>>>>> 07fdfba7864cc8f1e3706f0c65bc7526adab0005
 
