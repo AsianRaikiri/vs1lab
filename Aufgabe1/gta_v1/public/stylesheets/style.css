@@ -27,7 +27,7 @@ html {
   --link-color: #00B7FF;
   --background-color: #efefef;
   --border-color: #cdcdcd;
-  --gray-color: #666;
+  --gray-color: #666; 
 }
 
 
@@ -47,7 +47,18 @@ a {
 /* ### TODO ### Styles for other HTML elements */
 
 /* ... your code here ... */
-
+section {
+  width: 100%;
+}
+form {
+  width: 100%;
+}
+input {
+  width: 100%;
+}
+fieldset {
+  width: 100%;
+}
 
 /* Grid styles (no changes required) */
 
@@ -110,28 +121,51 @@ a {
 /* ### TODO ### Styles for Header Component */
 
 /* ... your code here ... */
+.header__image {
+  width: 50px;
+}
+
+.header {
+  padding: 5%;
+  display: flex;
+  background-color: lightgray ;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
 
 /* ### TODO ### Styles for Main Component */
 
 /* ... your code here ... */
 
-
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
-.form-field {
-  padding: 10px 0 0 10px;
-  display: flex;
-  flex-direction: column;
-  max-width: fit-content;
-}
 
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
+.discovery__map {
+  display: grid;
+}
 
+.discovery__results {
+  list-style: none;
+  font-weight: bold;
+  
+}
+
+.discovery__results li {
+  margin: 5% 0 5% 0%;
+  background-color: lightgray;
+  color:#00B7FF;
+  height: 50px;
+  border: 1px solid grey;
+  text-align: center;
+  
+}
 
 /* ### TODO ### Styles for Footer Component */
 
