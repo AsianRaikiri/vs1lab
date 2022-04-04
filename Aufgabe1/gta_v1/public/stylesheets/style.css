@@ -158,13 +158,13 @@ fieldset {
 }
 
 .discovery__results li {
-  margin: 5% 0 5% 0%;
+  margin: 1rem 0 ;
+  padding: 1rem;
   background-color: lightgray;
   color:#00B7FF;
-  height: 50px;
-  border: 1px solid grey;
-  text-align: center;
-  
+  height: auto;
+  border: 1px solid grey; 
+ 
 }
 
 /* ### TODO ### Styles for Footer Component */
