@@ -186,7 +186,7 @@ h2 {
 
 /* ... your code here ... */
 .tagging__layout {
-  margin: 6% 3% 0 3%;
+  margin: 1rem 0.5rem 0 0.5rem;
 }
 
 
@@ -229,17 +229,8 @@ h2 {
 }
 
 .discovery__layout {
-  margin: 6% 3% 0 3%;
+  margin: 1rem 0.5rem 0 0.5rem;
 }
-
-
-
-
-
-
-
-
-
 
 
 /* ### TODO ### Styles for Footer Component */
@@ -255,13 +246,37 @@ h2 {
   justify-content: space-between;
 }
 
-
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
 
 /* ... Beispiel???? Flo hat das getestet xD entfern es wenns nervt xD ... */
-@media (max-width: 600px) {
+@media (max-width: 300px) {
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col-4 {
+    width: 100%;
+  }
+
+  .discovery__map {
+    width: 100%;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+
+  .discovery__layout {
+    width: calc(100% - 1rem);
+  }
+
+  .tagging__layout {
+    width: calc(100% - 1rem);
+  }
+}
+
+
+@media (max-width: 600px) and (min-width: 301px) {
   .row {
     flex-direction: column;
   }
