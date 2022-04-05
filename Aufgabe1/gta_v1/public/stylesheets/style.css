@@ -154,21 +154,33 @@ fieldset {
 .discovery__results {
   list-style: none;
   font-weight: bold;
-  
 }
 
 .discovery__results li {
   margin: 1rem 0 ;
   padding: 1rem;
-  background-color: lightgray;
-  color:#00B7FF;
+  background-color: #EFEFEF;
+  color: #0097CF;
   height: auto;
-  border: 1px solid grey;
+  border: 1px solid #CDCDCD;
 }
 
+.discovery__map img {
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.discovery__map {
+  margin: 1rem;
+}
+
+.discovery__wrapper .row {
+  justify-content: start;
+}
 
 fieldset {
   padding: 1rem;
+  border-radius: 10px;
 }
 
 input {
@@ -176,6 +188,8 @@ input {
   outline: none;
   min-height: 2rem;
   margin: 3% 0 7% 0;
+  padding: 0.6rem;
+  border: 1px solid #767676;
 }
 
 .discovery__layout {
@@ -184,6 +198,19 @@ input {
 
 .tagging__layout {
   margin: 6% 3% 0 3%;
+}
+
+input:read-only{
+  background: #F8F8F8;
+  border: 1px solid #D0D0D0;
+}
+
+input[type=text] {
+  border-radius: 3px;
+}
+
+input[type=submit] {
+  font-weight: bold;
 }
 
 
