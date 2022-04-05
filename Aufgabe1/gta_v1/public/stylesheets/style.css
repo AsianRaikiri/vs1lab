@@ -259,3 +259,10 @@ h2 {
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
+
+/* ... Beispiel???? Flo hat das getestet xD entfern es wenns nervt xD ... */
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
+}
