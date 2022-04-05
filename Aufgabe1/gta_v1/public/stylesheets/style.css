@@ -252,7 +252,9 @@ h2 {
 
 /* ... Beispiel???? Flo hat das getestet xD entfern es wenns nervt xD ... */
 @media (max-width: 300px) {
-
+  .header__image{
+    display: none;
+  }
   .row {
     flex-direction: column;
   }
