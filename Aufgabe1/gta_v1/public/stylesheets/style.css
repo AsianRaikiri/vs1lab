@@ -163,9 +163,30 @@ fieldset {
   background-color: lightgray;
   color:#00B7FF;
   height: auto;
-  border: 1px solid grey; 
- 
+  border: 1px solid grey;
 }
+
+
+fieldset {
+  padding: 1rem;
+}
+
+input {
+  box-shadow: none;
+  outline: none;
+  min-height: 2rem;
+  margin: 3% 0 7% 0;
+}
+
+.discovery__layout {
+  margin: 6% 3% 0 3%;
+}
+
+.tagging__layout {
+  margin: 6% 3% 0 3%;
+}
+
+
 
 /* ### TODO ### Styles for Footer Component */
 
