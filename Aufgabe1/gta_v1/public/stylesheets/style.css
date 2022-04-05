@@ -50,14 +50,57 @@ a {
 section {
   width: 100%;
 }
+
 form {
   width: 100%;
 }
-input {
-  width: 100%;
-}
+
 fieldset {
   width: 100%;
+  padding: 1rem;
+  border-radius: 0.7rem;
+}
+
+input {
+  width: 100%;
+  box-shadow: none;
+  outline: none;
+  min-height: 2rem;
+  margin: 3% 0 7% 0;
+  padding: 0.6rem;
+  border: 1px solid #767676;
+}
+
+
+/* ... Latitude and Longitude read-only Button styling ... */
+input:read-only{
+  background: #F8F8F8;
+  border: 1px solid #D0D0D0;
+}
+
+/* ... Text-based Inputs styling ... */
+input[type=text] {
+  border-radius: 3px;
+}
+
+/* ... Text-based Inputs hover-effect ... */
+input[type=text]:hover:not(:read-only) {
+  border: 1px solid #D0D0D0;
+}
+
+/* ... Submit Input-Button styling ... */
+input[type=submit] {
+  font-weight: bold;
+}
+
+/* ... Submit Input-Button hover ... */
+input[type=submit]:hover {
+  border: 1px solid #767676;
+}
+
+/* ... Heading styling ... */
+h2 {
+  margin-bottom: 0.7rem;
 }
 
 /* Grid styles (no changes required) */
@@ -142,20 +185,22 @@ fieldset {
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
+.tagging__layout {
+  margin: 6% 3% 0 3%;
+}
 
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
-.discovery__map {
-  display: grid;
-}
 
+/* ... Result-List styling ... */
 .discovery__results {
   list-style: none;
   font-weight: bold;
 }
 
+/* ... Result-List-Item styling ... */
 .discovery__results li {
   margin: 1rem 0 ;
   padding: 1rem;
@@ -163,61 +208,52 @@ fieldset {
   color: #0097CF;
   height: auto;
   border: 1px solid #CDCDCD;
+  border-radius: 0.4rem;
 }
 
+/* ... Map styling ... */
+.discovery__map {
+  display: grid;
+  margin: 1rem;
+}
+
+/* ... Map Image styling ... */
 .discovery__map img {
   border-radius: 1rem;
   width: 100%;
 }
 
-.discovery__map {
-  margin: 1rem;
-}
-
+/* ... Styling Parent Element of Discovery Map and Results ... */
 .discovery__wrapper .row {
   justify-content: start;
-}
-
-fieldset {
-  padding: 1rem;
-  border-radius: 10px;
-}
-
-input {
-  box-shadow: none;
-  outline: none;
-  min-height: 2rem;
-  margin: 3% 0 7% 0;
-  padding: 0.6rem;
-  border: 1px solid #767676;
 }
 
 .discovery__layout {
   margin: 6% 3% 0 3%;
 }
 
-.tagging__layout {
-  margin: 6% 3% 0 3%;
-}
 
-input:read-only{
-  background: #F8F8F8;
-  border: 1px solid #D0D0D0;
-}
 
-input[type=text] {
-  border-radius: 3px;
-}
 
-input[type=submit] {
-  font-weight: bold;
-}
+
+
+
+
 
 
 
 /* ### TODO ### Styles for Footer Component */
 
 /* ... your code here ... */
+.footer {
+  padding: 3%;
+  margin-top: 2rem;
+  display: flex;
+  background-color: lightgray ;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
 
 /* ### TODO ### Media Queries */
