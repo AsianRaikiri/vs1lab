@@ -209,6 +209,7 @@ h2 {
   height: auto;
   border: 1px solid #CDCDCD;
   border-radius: 0.4rem;
+  text-align: center;
 }
 
 /* ... Map styling ... */
@@ -238,12 +239,8 @@ h2 {
 /* ... your code here ... */
 .footer {
   padding: 3%;
-  margin-top: 2rem;
-  display: flex;
+  margin: 2rem 0 0 0;
   background-color: lightgray ;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 }
 
 /* ### TODO ### Media Queries */
@@ -296,6 +293,7 @@ h2 {
   }
 }
 @media (max-width: 800px) and (min-width: 600px) {
+
   .col-4{
     width: calc(40.33% - 1rem);
   }
