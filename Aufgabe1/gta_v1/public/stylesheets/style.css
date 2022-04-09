@@ -242,7 +242,7 @@ main {
 
 /* ... your code here ... */
 .footer {
-  padding: 3%;
+  padding: 1.5rem;
   margin-top: auto;
   background-color: lightgray ;
   bottom: 0;
