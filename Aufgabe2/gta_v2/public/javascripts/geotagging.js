@@ -7,7 +7,6 @@
 // "console.log" writes to the browser's console. 
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
-console.log("The geoTagging script is going to start...");
 
 /**
  * A class to help using the HTML5 Geolocation API.
@@ -63,7 +62,7 @@ class LocationHelper {
  * A class to help using the MapQuest map service.
  */
 class MapManager {
-    #apiKey = '';
+    #apiKey = 'f64689zc2fhvhu0miIiVlLaUAchTYDWv';
 
     /**
      * Create a new MapManager instance.
@@ -82,7 +81,7 @@ class MapManager {
      * @returns {string} URL of generated map
      */
     getMapUrl(latitude, longitude, tags = [], zoom = 10) {
-        if (this.#apiKey === '') {
+        if (this.#apiKey === 'f64689zc2fhvhu0miIiVlLaUAchTYDWv') {
             console.log("No API key provided.");
             return "images/mapview.jpg";
         }
@@ -104,7 +103,28 @@ class MapManager {
  */
 // ... your code here ...
 
+function updateLocation() {
+    LocationHelper.findLocation((helper) => {
+
+        /* Constant lat and long */
+        const latitude = helper.latitude;
+        const longitude = helper.longitude;
+
+        /* Readonly Input change */
+        document.getElementById("lat").value = latitude;
+        document.getElementById("long").value = longitude;
+
+        /* Hidden Input change */
+        document.getElementById("discovery_hidden_latitude").value = latitude;
+        document.getElementById("discovery_hidden_longitude").value = longitude;
+    })
+}
+
+function test1() {
+    console.log("hallo");
+}
+
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
+    updateLocation();
 });
