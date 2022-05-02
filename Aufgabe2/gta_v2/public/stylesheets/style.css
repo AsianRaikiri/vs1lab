@@ -71,6 +71,22 @@ input {
   border: 1px solid #767676;
 }
 
+input[type=range] {
+  margin: 0;
+}
+
+.zoom-Slider {
+  display: flex;
+  align-items: center
+}
+
+.zoom-Slider label {
+  margin-right: 0.5rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;;
+}
+
 
 /* ... Latitude and Longitude read-only Button styling ... */
 input:read-only{

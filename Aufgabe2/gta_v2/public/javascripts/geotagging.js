@@ -130,7 +130,7 @@ function updateLocation() {
 
         /* Map Image update */
         let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
-        let mapUrl = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value,[], 15);
+        let mapUrl = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value,[], getZoom());
         image_view.src = mapUrl;
     });
     /* Zugriff auf src von <img src=""> mit image_view.src = ... */
@@ -141,3 +141,8 @@ function updateLocation() {
 document.addEventListener("DOMContentLoaded", () => {
     updateLocation();
 });
+
+function getZoom() {
+    let zoomSlider = document.getElementById("zoomSlider_input");
+    return zoomSlider.value;
+}

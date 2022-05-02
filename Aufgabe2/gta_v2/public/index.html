@@ -74,6 +74,7 @@
                                     <input type="hidden" name="discovery_hidden_latitude" id="discovery_hidden_latitude">
                                     <input type="hidden" name="discovery_hidden_longitude" id="discovery_hidden_longitude">
 
+
                                     <input type="submit" value="Search" />
                                 </div>
                             </div>
@@ -86,7 +87,12 @@
                         <div class="row">
                             <div class="col-8 discovery__map">
                                 <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
-                                <span>Result map</span>
+
+                                <div class="zoom-Slider">
+                                    <label for="zoomSlider_input">Zoom</label>
+                                    <input id="zoomSlider_input" type="range" max="18" min="2" value="8" onchange="updateLocation()">
+                                </div>
+
                             </div>
                             <div class="col-4 discovery__taglist">
                                 <ul class="discovery__results" id="discoveryResults">
