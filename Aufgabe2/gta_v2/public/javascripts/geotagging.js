@@ -127,8 +127,12 @@ function updateLocation() {
         /* Hidden Input change */
         disc_hidden_lat.value = latitude;
         disc_hidden_long.value = longitude;
-    });
 
+        /* Map Image update */
+        let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
+        let mapUrl = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value,[], 15);
+        image_view.src = mapUrl;
+    });
     /* Zugriff auf src von <img src=""> mit image_view.src = ... */
     /* Zugriff auf die long und lat für die MAP über disc_hidden_lat.value. Analog beim anderen auch*/
 }
