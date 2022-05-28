@@ -42,7 +42,8 @@ app.use(express.urlencoded({ extended: false }));
  * Test the result in a browser here: 'http://localhost:3000/'.
  */
 
-// TODO: ... your code here ...
+
+app.use(express.static( './public'))
 
 // Set dedicated script for routing
 app.use('/', indexRouter);
@@ -50,7 +51,7 @@ app.use('/', indexRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
-  });
+});
 
 // error handler
 app.use(function(err, req, res) {

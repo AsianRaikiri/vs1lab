@@ -12,6 +12,7 @@
 
 const express = require('express');
 const router = express.Router();
+let app = express();
 
 /**
  * The module "geotag" exports a class GeoTagStore. 
@@ -30,6 +31,10 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
+const {json} = require("express");
+const {stringify} = require("nodemon/lib/utils");
+let store = new GeoTagStore();
+let entries = store.storage;
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -61,6 +66,11 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+  let body = JSON.parse(JSON.stringify(req.body));
+  store.addGeoTag(new GeoTag(body.name_field_name, body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name))
+  res.render('index', {taglist: []})
+})
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
