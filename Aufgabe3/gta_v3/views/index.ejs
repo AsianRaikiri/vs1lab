@@ -6,10 +6,11 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="./public/images/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoTagApp</title>
-    <link type="text/css" rel="stylesheet" href="../public/stylesheets/style.css"/>
+    <link type="text/css" rel="stylesheet" href="./public/stylesheets/style.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -35,10 +36,10 @@
                         <legend>Add a new GeoTag</legend>
 
                         <label for="lat">Latitude</label>
-                        <input type="text" name="latitude_field_name" id="lat" readonly/>
+                        <input type="text" name="latitude_field_name" id="lat" readonly value="<%- lat %>"/>
 
                         <label for="long">Longitude:</label>
-                        <input type="text" name="longitude_field_name" id="long" readonly/>
+                        <input type="text" name="longitude_field_name" id="long" readonly value="<%- long %>"/>
 
                         <label for="name">Name:</label>
                         <input type="text" name="name_field_name" id="name" placeholder="e.g. Central Berlin" maxlength=10 required/>
@@ -97,7 +98,9 @@
                         </div>
                         <div class="col-4 discovery__taglist">
                             <ul class="discovery__results" id="discoveryResults">
-
+                                <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
+                                    <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                                <% }); %>
                             </ul>
                         </div>
                     </div>

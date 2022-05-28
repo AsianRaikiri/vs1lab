@@ -25,9 +25,9 @@
  */
 
 GeoTagExamples = require('../models/geotag-examples');
-GeoTag = require('../models/geotag')
+GeoTag = require('../models/geotag');
 
-class InMemoryGeoTagStore{
+class InMemoryGeoTagStore {
 
     storage = [];
     rad = 10;
@@ -54,7 +54,7 @@ class InMemoryGeoTagStore{
         this.tags.find((tag) => {
             let longitude_difference = tag.longitude - entry_tag.longitude;
             let latitude_difference = tag.latitude - entry_tag.latitude;
-            if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2))) entries.push(tag);
+            if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) entries.push(tag);
         })
 
         return entries;

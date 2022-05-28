@@ -31,9 +31,14 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
+const LocationHelper = require('../public/javascripts/location-helper')
 const {json} = require("express");
 const {stringify} = require("nodemon/lib/utils");
+
+let helper = LocationHelper;
+
 let store = new GeoTagStore();
+console.log(store.storage);
 let entries = store.storage;
 
 /**
@@ -47,7 +52,12 @@ let entries = store.storage;
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  let lat, long;
+  helper.findLocation((h) => {
+    lat = h.latitude;
+    long = h.longitude;
+  })
+  res.render('index', { taglist: [], lat: lat, long: long});
 });
 
 /**
@@ -88,6 +98,11 @@ router.post('/tagging', (req, res) => {
  * by radius and keyword.
  */
 
-// TODO: ... your code here ...
+router.post('/discovery', (req, res) => {
+  let body = JSON.parse(JSON.stringify(req.body));
+
+  entries = store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, ''))
+  res.render('index', {taglist: entries})
+})
 
 module.exports = router;
