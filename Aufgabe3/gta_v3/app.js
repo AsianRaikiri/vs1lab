@@ -16,6 +16,7 @@ const path = require('path');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
+const Path = require("path");
 
 /**
  * Set up Express app.
@@ -43,7 +44,8 @@ app.use(express.urlencoded({ extended: false }));
  */
 
 
-app.use(express.static( './public'))
+app.use('/public', express.static('public'));
+
 
 // Set dedicated script for routing
 app.use('/', indexRouter);
