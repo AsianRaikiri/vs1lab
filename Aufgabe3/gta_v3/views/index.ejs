@@ -1,4 +1,3 @@
-<!-- TODO: HTML AUS AUFGABE2 HIERHER KOPIEREN UND DIE BEISPIEL-EINTRÄGE DER DISCOVERY-LISTE MIT DEN FOLGENDEN ZEILEN ERSETZEN -->
 <!DOCTYPE html>
 
 <!-- File origin: VS1LAB A1a -->
@@ -16,7 +15,7 @@
 
 <body>
 <header class="header">
-    <!--<img src="../public/images/location.png" class="header__image" alt="an image of a map and location">!-->
+    <img src="../public/images/location.png" class="header__image" alt="an image of a map and location">
     <h1 class="header__title">GeoTagApp</h1>
     <nav class="header__navigation">
         <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
@@ -36,10 +35,10 @@
                         <legend>Add a new GeoTag</legend>
 
                         <label for="lat">Latitude</label>
-                        <input type="text" name="latitude_field_name" id="lat" readonly value="<%- lat %>"/>
+                        <input type="text" name="latitude_field_name" id="lat" readonly/>
 
                         <label for="long">Longitude:</label>
-                        <input type="text" name="longitude_field_name" id="long" readonly value="<%- long %>"/>
+                        <input type="text" name="longitude_field_name" id="long" readonly/>
 
                         <label for="name">Name:</label>
                         <input type="text" name="name_field_name" id="name" placeholder="e.g. Central Berlin" maxlength=10 required/>
@@ -48,7 +47,7 @@
                         <input type="text" name="hashtag_field_name" id="hash" placeholder="e.g. #ber" pattern="#[A-Za-z]{1,10}"/>
 
                         <div class="button-field">
-                            <input type="button" value="Refresh" onclick="updateLocation()">
+                            <input type="button" value="Refresh" id="button_refresh">
                             <input type="submit" value="Add Tag"/>
                         </div>
 
@@ -88,13 +87,15 @@
                 <div class="discovery__wrapper">
                     <div class="row">
                         <div class="col-8 discovery__map">
-                            <!--<img src="./public/images/mapview.jpg" alt="a map with locations" id="mapView" />!-->
-
-                            <div class="zoom-Slider">
-                                <label for="zoomSlider_input">Zoom</label>
-                                <input id="zoomSlider_input" type="range" max="18" min="2" value="8" onchange="updateLocation()">
+                            <div class="col-12">
+                                <img src="./public/images/mapview.jpg" alt="a map with locations" id="mapView" data-tags="<%- tagsjson %>"/>
+                                <textarea content="<%-
+                                tagsjson %>"></textarea>
+                                <div class="zoom-Slider">
+                                    <label for="zoomSlider_input">Zoom</label>
+                                    <input id="zoomSlider_input" type="range" max="18" min="2" value="8" >
+                                </div>
                             </div>
-
                         </div>
                         <div class="col-4 discovery__taglist">
                             <ul class="discovery__results" id="discoveryResults">
@@ -117,7 +118,7 @@
 <!-- Load JavaScripts
         ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<!--<script src="../public/javascripts/geotagging.js"></script>!-->
+<script type="module" src="../public/javascripts/geotagging.js"></script>
 
 </html>
 

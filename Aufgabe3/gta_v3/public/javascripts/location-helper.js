@@ -6,7 +6,7 @@
  * A class to help using the HTML5 Geolocation API.
  */
 // eslint-disable-next-line no-unused-vars
-class LocationHelper {
+export class LocationHelper {
     // Location values for latitude and longitude are private properties to protect them from changes.
     #latitude = '';
 
@@ -59,5 +59,3 @@ class LocationHelper {
         });
     }
 }
-
-module.exports = LocationHelper;

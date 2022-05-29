@@ -17,8 +17,7 @@ let app = express();
 /**
  * The module "geotag" exports a class GeoTagStore. 
  * It represents geotags.
- * 
- * TODO: implement the module in the file "../models/geotag.js"
+ *
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
@@ -26,20 +25,15 @@ const GeoTag = require('../models/geotag');
 /**
  * The module "geotag-store" exports a class GeoTagStore. 
  * It provides an in-memory store for geotag objects.
- * 
- * TODO: implement the module in the file "../models/geotag-store.js"
+ *
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
-const LocationHelper = require('../public/javascripts/location-helper')
 const {json} = require("express");
 const {stringify} = require("nodemon/lib/utils");
 
-let helper = LocationHelper;
 
 let store = new GeoTagStore();
-console.log(store.storage);
-let entries = store.storage;
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -49,15 +43,9 @@ let entries = store.storage;
  *
  * As response, the ejs-template is rendered without geotag objects.
  */
-
-// TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  let lat, long;
-  helper.findLocation((h) => {
-    lat = h.latitude;
-    long = h.longitude;
-  })
-  res.render('index', { taglist: [], lat: lat, long: long});
+  let body = JSON.parse(JSON.stringify(req.body));
+  res.render('index', { taglist: [], tagsjson: ''});
 });
 
 /**
@@ -75,12 +63,11 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
-// TODO: ... your code here ...
 router.post('/tagging', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
-  store.addGeoTag(new GeoTag(body.name_field_name, body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name))
-  res.render('index', {taglist: []})
-})
+  store.addGeoTag(new GeoTag(body.name_field_name,  body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name))
+  res.render('index', {taglist: [], tagsjson: '',})
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -100,9 +87,8 @@ router.post('/tagging', (req, res) => {
 
 router.post('/discovery', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
-
-  entries = store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, ''))
-  res.render('index', {taglist: entries})
-})
+  let entries = store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, ''))
+  res.render('index', {taglist: store.getAll, tagsjson: JSON.stringify(entries)})
+});
 
 module.exports = router;

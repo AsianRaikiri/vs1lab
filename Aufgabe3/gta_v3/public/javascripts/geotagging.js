@@ -1,6 +1,6 @@
+import { LocationHelper } from './location-helper.js';
+import { MapManager } from './map-manager.js';
 // File origin: VS1LAB A2
-
-/* eslint-disable no-unused-vars */
 
 // This script is executed when the browser loads index.html.
 
@@ -8,20 +8,16 @@
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
 
-LocationHelper = require('../javascripts/location-helper');
-MapManager = require('../javascripts/map-manager');
-
 /**
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-// ... your code here ...
 
-function updateLocation() {
+export async function updateLocation() {
+
     /* Input Field Variables */
-    let l = new LocationHelper();
-
     let disc_hidden_long = document.getElementById("discovery_hidden_longitude");
+
     let disc_hidden_lat = document.getElementById("discovery_hidden_latitude");
     /* Hidden Input Field Variables */
     let tag_long = document.getElementById("long");
@@ -29,7 +25,12 @@ function updateLocation() {
     /* Map View Image Element */
     let image_view = document.getElementById("mapView");
 
-    l.findLocation((helper) => {
+    if (document.getElementById("discovery_hidden_longitude").value === '' || document.getElementById("discovery_hidden_latitude").value === '') {
+
+
+    }
+
+    LocationHelper.findLocation((helper) => {
 
         /* Constant lat and long */
         const latitude = helper.latitude;
@@ -44,33 +45,36 @@ function updateLocation() {
         disc_hidden_long.value = longitude;
 
         /* Map Image update */
-        let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
-        let mapUrl = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value,[], getZoom());
-        image_view.src = mapUrl;
+
     });
+
+    let dataTags = image_view.getAttribute('data-tags');
+
+    let tags = []
+    if (dataTags.length > 0) {
+        tags = JSON.parse(dataTags);
+
+    }
+    let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
+    setTimeout(function () {
+        image_view.src = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value, tags, getZoom());
+    }, 500);
+
     /* Zugriff auf src von <img src=""> mit image_view.src = ... */
     /* Zugriff auf die long und lat für die MAP über disc_hidden_lat.value. Analog beim anderen auch*/
 }
 
-function getLocation() {
+document.addEventListener('DOMContentLoaded', () => {
+    updateLocation();
+});
 
-    let ret = [];
-    LocationHelper.findLocation((helper) => {
+document.getElementById("zoomSlider_input").addEventListener('change', () => {
+    updateLocation();
+});
 
-        /* Constant lat and long */
-        const latitude = helper.latitude;
-        const longitude = helper.longitude;
-
-        ret.push(latitude, longitude);
-
-        /* Map Image update */
-        let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
-    });
-    return ret;
-}
-
-// Wait for the page to fully load its DOM content, then call updateLocation
-
+document.getElementById("button_refresh").addEventListener('click', () => {
+    updateLocation();
+});
 
 function getZoom() {
     let zoomSlider = document.getElementById("zoomSlider_input");

@@ -44,7 +44,10 @@ a {
   color: var(--link-color);
 }
 
-/* ### TODO ### Styles for other HTML elements */
+.main {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
 
 /* ... your code here ... */
 section {

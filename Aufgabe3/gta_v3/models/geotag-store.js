@@ -29,7 +29,7 @@ GeoTag = require('../models/geotag');
 
 class InMemoryGeoTagStore {
 
-    storage = [];
+    #storage = [];
     rad = 10;
 
 
@@ -62,14 +62,19 @@ class InMemoryGeoTagStore {
 
     searchNearbyGeoTags(entry_tag) {
         let entries = []
-        entries = this.getNearbyGeoTags(entry_tag).find(tag => tag.name === entry_tag.name)
+        entries = this.getNearbyGeoTags(entry_tag).find(tag => tag.name === entry_tag.name || tag.name.contains(entry_tag.name))
         return entries;
+    }
+
+    get getAll() {
+        return this.#storage;
     }
 
     loadEntries() {
         GeoTagExamples.tagList.forEach((tagList) => {
-            this.storage.push(new GeoTag(tagList[0], tagList[1], tagList[2], tagList[3]))
-        })
+            let tag = new GeoTag(tagList[0], tagList[1], tagList[2], tagList[3])
+            this.#storage.push(tag);
+        });
         this.tags = GeoTagExamples.tagList;
     }
 }
