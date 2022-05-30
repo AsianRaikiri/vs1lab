@@ -13,7 +13,7 @@ import { MapManager } from './map-manager.js';
  * It is called once the page has been fully loaded.
  */
 
-export async function updateLocation() {
+export function updateLocation() {
 
     /* Input Field Variables */
     let disc_hidden_long = document.getElementById("discovery_hidden_longitude");
@@ -50,12 +50,9 @@ export async function updateLocation() {
 
     let dataTags = image_view.getAttribute('data-tags');
 
-    let tags = []
-    if (dataTags.length > 0) {
-        tags = JSON.parse(dataTags);
-
-    }
+    let tags = JSON.parse(JSON.parse(dataTags));
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
+
     setTimeout(function () {
         image_view.src = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value, tags, getZoom());
     }, 500);

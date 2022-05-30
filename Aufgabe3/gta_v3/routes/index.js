@@ -13,6 +13,7 @@
 const express = require('express');
 const router = express.Router();
 let app = express();
+let entries = [];
 
 /**
  * The module "geotag" exports a class GeoTagStore. 
@@ -87,8 +88,11 @@ router.post('/tagging', (req, res) => {
 
 router.post('/discovery', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
-  let entries = store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, ''))
+  //let entries = store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, ''))
+  entries = JSON.stringify(store.getAll);
+  console.log('Data-Tags before: ', entries);
   res.render('index', {taglist: store.getAll, tagsjson: JSON.stringify(entries)})
+
 });
 
 module.exports = router;
