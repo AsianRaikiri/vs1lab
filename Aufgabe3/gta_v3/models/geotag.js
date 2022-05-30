@@ -17,7 +17,6 @@ class GeoTag {
         this.latitude = lat;
         this.longitude = long;
     }
-    
 }
 
 module.exports = GeoTag;

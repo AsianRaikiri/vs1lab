@@ -46,7 +46,7 @@ let store = new GeoTagStore();
  */
 router.get('/', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
-  res.render('index', { taglist: [], tagsjson: ''});
+  res.render('index', { taglist: [], tagsjson: '', lat: 0, long: 0});
 });
 
 /**
@@ -66,8 +66,8 @@ router.get('/', (req, res) => {
 
 router.post('/tagging', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
-  store.addGeoTag(new GeoTag(body.name_field_name,  body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name))
-  res.render('index', {taglist: [], tagsjson: '',})
+  store.addGeoTag(new GeoTag(body.name_field_name,  body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name));
+  res.render('index', {taglist: [], tagsjson: '', lat: body.latitude_field_name, long: body.longitude_field_name});
 });
 
 /**
@@ -89,7 +89,7 @@ router.post('/tagging', (req, res) => {
 router.post('/discovery', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
   let entries = (store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, '')));
-  res.render('index', {taglist: entries, tagsjson: JSON.stringify(entries)})
+  res.render('index', {taglist: entries, tagsjson: JSON.stringify(entries), lat: body.latitude_field_name, long: body.longitude_field_name});
 });
 
 module.exports = router;

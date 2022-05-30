@@ -43,9 +43,10 @@ export function updateLocation() {
     }
 
     let dataTags = image_view.getAttribute('data-tags');
-    console.log(dataTags);
     let tags = [];
-    tags = JSON.parse(dataTags);
+    if(dataTags.length > 0) {
+        tags = JSON.parse(dataTags);
+    }
 
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
 
