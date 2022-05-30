@@ -38,7 +38,7 @@ class InMemoryGeoTagStore {
     }
 
     removeGeoTag(tag) {
-        this.tags.splice(this.tags.find(entry => entry.latitude === tag.latitude
+        this.#storage.splice(this.#storage.find(entry => entry.latitude === tag.latitude
             & entry.longitude === tag.longitude
             & entry.name === tag.name
             & entry. hashtag === tag.hashtag), 1);
@@ -70,16 +70,10 @@ class InMemoryGeoTagStore {
 
     searchNearbyGeoTags(entry_tag) {
         let entries = []
-        this.getNearbyGeoTags(entry_tag).forEach(e => {
-            let name = e[0];
-            if(name === entry_tag.name) {
-                entries.push(e);
-            }
-        });
 
         this.getNearbyGeoTags(entry_tag).forEach((value, index, array) => {
             let name = String(value.name);
-            if(name === entry_tag.name || name.includes(entry_tag.name)){
+            if(name === entry_tag.name || name.includes(entry_tag.name) || value.hashtag.includes(entry_tag.name)){
                 entries.push(value);
             }
         });

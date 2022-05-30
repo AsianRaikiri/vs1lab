@@ -89,7 +89,6 @@ router.post('/tagging', (req, res) => {
 router.post('/discovery', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
   let entries = (store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, '')));
-  console.log('Entries for ' + body.discovery_field_name + ' ', entries)
   res.render('index', {taglist: entries, tagsjson: JSON.stringify(entries)})
 });
 
