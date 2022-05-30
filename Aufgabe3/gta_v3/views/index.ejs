@@ -96,11 +96,13 @@
                             </div>
                         </div>
                         <div class="col-4 discovery__taglist">
-                            <ul class="discovery__results" id="discoveryResults">
-                                <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-                                    <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
-                                <% }); %>
-                            </ul>
+                            <div style="overflow-y: scroll; margin-top: 1rem; height: 20rem;">
+                                <ul class="discovery__results" id="discoveryResults">
+                                    <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
+                                        <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                                    <% }); %>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
