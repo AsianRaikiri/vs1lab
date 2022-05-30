@@ -30,7 +30,7 @@ GeoTag = require('../models/geotag');
 class InMemoryGeoTagStore {
 
     #storage = [];
-    rad = 10;
+    rad = 0.1;
 
 
     constructor() {
@@ -45,24 +45,44 @@ class InMemoryGeoTagStore {
     }
 
     addGeoTag(tag) {
-        this.tags.push(tag);
+        const obj = {
+            name: tag.name,
+            latitude: tag.latitude,
+            longitude: tag.longitude,
+            hashtag: tag.hashtag
+        }
+        this.#storage.push(obj);
     }
 
     getNearbyGeoTags(entry_tag) {
         let entries = [];
 
-        this.tags.find((tag) => {
-            let longitude_difference = tag.longitude - entry_tag.longitude;
-            let latitude_difference = tag.latitude - entry_tag.latitude;
-            if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) entries.push(tag);
-        })
+        this.#storage.forEach((value, index, array) => {
+            let longitude_difference = value.longitude - entry_tag.longitude;
+            let latitude_difference = value.latitude - entry_tag.latitude;
+            if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) {
+                entries.push(value);
+            }
+        });
 
         return entries;
     }
 
     searchNearbyGeoTags(entry_tag) {
         let entries = []
-        entries = this.getNearbyGeoTags(entry_tag).find(tag => tag.name === entry_tag.name || tag.name.contains(entry_tag.name))
+        this.getNearbyGeoTags(entry_tag).forEach(e => {
+            let name = e[0];
+            if(name === entry_tag.name) {
+                entries.push(e);
+            }
+        });
+
+        this.getNearbyGeoTags(entry_tag).forEach((value, index, array) => {
+            let name = String(value.name);
+            if(name === entry_tag.name || name.includes(entry_tag.name)){
+                entries.push(value);
+            }
+        });
         return entries;
     }
 
@@ -73,9 +93,8 @@ class InMemoryGeoTagStore {
     loadEntries() {
         GeoTagExamples.tagList.forEach((tagList) => {
             let tag = new GeoTag(tagList[0], tagList[1], tagList[2], tagList[3])
-            this.#storage.push(tag);
+            this.addGeoTag(tag);
         });
-        this.tags = GeoTagExamples.tagList;
     }
 }
 

@@ -26,36 +26,32 @@ export function updateLocation() {
     let image_view = document.getElementById("mapView");
 
     if (document.getElementById("discovery_hidden_longitude").value === '' || document.getElementById("discovery_hidden_latitude").value === '') {
+        LocationHelper.findLocation((helper) => {
 
+            /* Constant lat and long */
+            const latitude = helper.latitude;
+            const longitude = helper.longitude;
 
+            /* Readonly Input change */
+            tag_lat.value = latitude;
+            tag_long.value = longitude;
+
+            /* Hidden Input change */
+            disc_hidden_lat.value = latitude;
+            disc_hidden_long.value = longitude;
+        });
     }
 
-    LocationHelper.findLocation((helper) => {
-
-        /* Constant lat and long */
-        const latitude = helper.latitude;
-        const longitude = helper.longitude;
-
-        /* Readonly Input change */
-        tag_lat.value = latitude;
-        tag_long.value = longitude;
-
-        /* Hidden Input change */
-        disc_hidden_lat.value = latitude;
-        disc_hidden_long.value = longitude;
-
-        /* Map Image update */
-
-    });
-
     let dataTags = image_view.getAttribute('data-tags');
+    console.log(dataTags);
+    let tags = [];
+    tags = JSON.parse(dataTags);
 
-    let tags = JSON.parse(JSON.parse(dataTags));
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
 
     setTimeout(function () {
         image_view.src = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value, tags, getZoom());
-    }, 500);
+    }, 1000);
 
     /* Zugriff auf src von <img src=""> mit image_view.src = ... */
     /* Zugriff auf die long und lat für die MAP über disc_hidden_lat.value. Analog beim anderen auch*/
