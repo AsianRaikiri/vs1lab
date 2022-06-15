@@ -19,15 +19,31 @@ const router = express.Router();
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
-
-/**
- * The module "geotag-store" exports a class GeoTagStore. 
- * It provides an in-memory store for geotag objects.
- */
-// eslint-disable-next-line no-unused-vars
+const {json} = require("express");
+const {stringify} = require("nodemon/lib/utils");
 const GeoTagStore = require('../models/geotag-store');
 
+let store = new GeoTagStore();
+
+
 // App routes (A3)
+
+router.get('/', (req, res) => {
+  let body = JSON.parse(JSON.stringify(req.body));
+  res.render('index', { taglist: [], tagsjson: '', lat: 0, long: 0});
+});
+
+router.post('/discovery', (req, res) => {
+  let body = JSON.parse(JSON.stringify(req.body));
+  let entries = (store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, '')));
+  res.render('index', {taglist: entries, tagsjson: JSON.stringify(entries), lat: body.latitude_field_name, long: body.longitude_field_name});
+});
+
+router.post('/tagging', (req, res) => {
+  let body = JSON.parse(JSON.stringify(req.body));
+  store.addGeoTag(new GeoTag(body.name_field_name,  body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name));
+  res.render('index', {taglist: [], tagsjson: '', lat: body.latitude_field_name, long: body.longitude_field_name});
+});
 
 /**
  * Route '/' for HTTP 'GET' requests.
