@@ -147,7 +147,6 @@ router.get('/api/geotags/:id', (req, res) => {
  * The updated resource is rendered as JSON in the response. 
  */
 
-// TODO: ... your code here ...
 router.put('/api/geotags/:id', (req, res) => {
   let id = parseInt(req.params.id);
 
