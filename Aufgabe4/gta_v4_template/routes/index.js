@@ -59,7 +59,6 @@ router.get('/', (req, res) => {
 });
 
 // API routes (A4)
-
 /**
  * Route '/api/geotags' for HTTP 'GET' requests.
  * (http://expressjs.com/de/4x/api.html#app.get.method)
@@ -72,8 +71,19 @@ router.get('/', (req, res) => {
  * If 'latitude' and 'longitude' are available, it will be further filtered based on radius.
  */
 
-// TODO: ... your code here ...
+router.get('/api/geotags', (req, res) => {
+  let longtitudeQuery = req.query.longitude;
+  let latitudeQuery = req.query.latitude;
+  let searchTermQuery = req.query.searchterm;
 
+  let filtered = store.filterForSearchTerm(searchTermQuery);
+
+  if(longtitudeQuery != null && latitudeQuery != null) {
+    filtered = store.filterNearbyGeoTags(new GeoTag('', latitudeQuery,longtitudeQuery))
+  }
+
+  res.status(200).json(filtered);
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -87,6 +97,20 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/api/geotags', (req, res) => {
+  let name = req.body.name;
+  let long = parseFloat(req.body.longitude);
+  let lat = parseFloat(req.body.latitude);
+  let hashtag = req.body.hashtag;
+
+  let newEntry = new GeoTag(name, lat, long, hashtag);
+
+  let id = store.addGeoTag(newEntry);
+
+  res.append('URL', "api/geotags/" + id);
+
+  res.status(201).json(store.getAll);
+});
 
 
 /**
@@ -99,7 +123,14 @@ router.get('/', (req, res) => {
  * The requested tag is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
+router.get('/api/geotags/:id', (req, res) => {
+  let id = req.params.id;
+
+  let foundGeoTags = store.searchGeoTagById(id);
+  console.log(foundGeoTags);
+
+  res.status(200).json(foundGeoTags);
+});
 
 
 /**
@@ -117,6 +148,18 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.put('/api/geotags/:id', (req, res) => {
+  let id = parseInt(req.params.id);
+
+  let name = req.body.name;
+  let long = parseFloat(req.body.longitude);
+  let lat = parseFloat(req.body.latitude);
+  let hashtag = req.body.hashtag;
+
+  store.updateGeoTagbyID(id, new GeoTag(name, lat, long, hashtag));
+
+  res.status(202).json(store.searchGeoTagById(id));
+});
 
 
 /**
@@ -130,6 +173,12 @@ router.get('/', (req, res) => {
  * The deleted resource is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
+router.delete('/api/geotags/:id', (req, res) => {
+  let id = parseInt(req.params.id);
+  let deleted = store.searchGeoTagById(id);
+  store.removeGeoTag(id);
+
+  res.status(202).json(deleted);
+});
 
 module.exports = router;

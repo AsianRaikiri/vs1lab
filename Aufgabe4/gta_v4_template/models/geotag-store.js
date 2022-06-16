@@ -24,6 +24,7 @@
  * - Keyword matching should include partial matches from name or hashtag fields. 
  */
 
+const Console = require("console");
 GeoTagExamples = require('../models/geotag-examples');
 GeoTag = require('../models/geotag');
 
@@ -37,43 +38,90 @@ class InMemoryGeoTagStore {
         this.loadEntries();
     }
 
-    removeGeoTag(tag) {
-        this.#storage.splice(this.#storage.find(entry => entry.latitude === tag.latitude
-            & entry.longitude === tag.longitude
-            & entry.name === tag.name
-            & entry. hashtag === tag.hashtag), 1);
+    removeGeoTag(id) {
+        let diff = [];
+        this.#storage.forEach((value, index, array) => {
+            if(value.id !== id) {
+                diff.push(value);
+            }
+        });
+        this.#storage = diff;
     }
 
-    addGeoTag(tag) {
+    /**
+     *
+     * @param tag Wants an GeoTag obj Param
+     * @param id
+     * @returns {number} Returns ID if necessary
+     */
+    addGeoTag(tag, id = this.getNewId) {
         const obj = {
+            id: id,
             name: tag.name,
             latitude: tag.latitude,
             longitude: tag.longitude,
             hashtag: tag.hashtag
         }
         this.#storage.push(obj);
+        return obj.id;
     }
 
-    getNearbyGeoTags(entry_tag) {
-        let entries = [];
-
+    /**
+     * Creates new unique ID
+     * @returns {number}
+     */
+    get getNewId() {
+        let id = 0;
         this.#storage.forEach((value, index, array) => {
-            let longitude_difference = value.longitude - entry_tag.longitude;
-            let latitude_difference = value.latitude - entry_tag.latitude;
+            if((this.#storage[index + 1] == null && value.id != null)) {
+                id = value.id + 1;
+            }
+        });
+        return id;
+    }
+
+    searchGeoTagById(id) {
+        return this.#storage.find(value => parseInt(value.id) === parseInt(id));
+    }
+
+    searchNearbyGeoTags(entry_tag) {
+        return this.filterForSearchTerm(entry_tag.name, this.filterNearbyGeoTags(entry_tag, this.#storage));
+    }
+
+    updateGeoTagbyID(id, tag) {
+        this.removeGeoTag(id);
+        this.addGeoTag(tag, id);
+    }
+
+    /**
+     *
+     * @param reference_tag Reference Location for Searching nearby Tags
+     * @param toFilter Array of tags to filter through; if toFilter is undefined, #storage is used
+     * @returns {entries[]} Returns entries of toFilter near to reference_tag
+     */
+    filterNearbyGeoTags(reference_tag, toFilter = this.#storage) {
+
+        let entries = [];
+        toFilter.forEach((value, index, array) => {
+            let longitude_difference = value.longitude - reference_tag.longitude;
+            let latitude_difference = value.latitude - reference_tag.latitude;
             if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) {
                 entries.push(value);
             }
         });
-
         return entries;
     }
 
-    searchNearbyGeoTags(entry_tag) {
-        let entries = []
 
-        this.getNearbyGeoTags(entry_tag).forEach((value, index, array) => {
-            let name = String(value.name);
-            if(name === entry_tag.name || name.includes(entry_tag.name) || value.hashtag.includes(entry_tag.name)){
+    filterForSearchTerm(term, toFilter = this.#storage) {
+
+        let entries = [];
+        if(term === undefined || term.length === 0) {
+            return toFilter;
+        }
+        toFilter.forEach((value) => {
+            if(value.name === term || value.name.includes(term) || value.hashtag.includes(term)){
+
                 entries.push(value);
             }
         });

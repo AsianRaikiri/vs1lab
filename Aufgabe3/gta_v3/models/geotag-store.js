@@ -58,6 +58,7 @@ class InMemoryGeoTagStore {
         let entries = [];
 
         this.#storage.forEach((value, index, array) => {
+
             let longitude_difference = value.longitude - entry_tag.longitude;
             let latitude_difference = value.latitude - entry_tag.latitude;
             if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) {
@@ -70,7 +71,6 @@ class InMemoryGeoTagStore {
 
     searchNearbyGeoTags(entry_tag) {
         let entries = []
-
         this.getNearbyGeoTags(entry_tag).forEach((value, index, array) => {
             let name = String(value.name);
             if(name === entry_tag.name || name.includes(entry_tag.name) || value.hashtag.includes(entry_tag.name)){
