@@ -155,7 +155,7 @@ router.put('/api/geotags/:id', (req, res) => {
   let lat = parseFloat(req.body.latitude);
   let hashtag = req.body.hashtag;
 
-  store.updateGeoTagbyID(id, new GeoTag(name, lat, long, hashtag));
+  store.updateGeoTagByID(id, new GeoTag(name, lat, long, hashtag));
 
   res.status(202).json(store.searchGeoTagById(id));
 });

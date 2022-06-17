@@ -33,11 +33,14 @@ class InMemoryGeoTagStore {
     #storage = [];
     rad = 0.1;
 
-
     constructor() {
         this.loadEntries();
     }
 
+    /**
+     * Removes an GeoTag Object with a certain ID.
+     * @param id
+     */
     removeGeoTag(id) {
         let diff = [];
         this.#storage.forEach((value, index, array) => {
@@ -67,7 +70,7 @@ class InMemoryGeoTagStore {
     }
 
     /**
-     * Creates new unique ID
+     * Creates new unique ID for every new GeoTag Object
      * @returns {number}
      */
     get getNewId() {
@@ -80,21 +83,32 @@ class InMemoryGeoTagStore {
         return id;
     }
 
+    /**
+     * Searchs and returns an GeoTag by a given ID
+     * @param id of the GeoTag
+     * @returns {*} returns the GeoTag as an JSON Object
+     */
     searchGeoTagById(id) {
         return this.#storage.find(value => parseInt(value.id) === parseInt(id));
     }
+
 
     searchNearbyGeoTags(entry_tag) {
         return this.filterForSearchTerm(entry_tag.name, this.filterNearbyGeoTags(entry_tag, this.#storage));
     }
 
-    updateGeoTagbyID(id, tag) {
+    /**
+     * Method to update an GeoTag
+     * @param id
+     * @param tag
+     */
+    updateGeoTagByID(id, tag) {
         this.removeGeoTag(id);
         this.addGeoTag(tag, id);
     }
 
     /**
-     *
+     * Method to filter an Array of GeoTags. Filters for GeoTags in range of reference_tag.
      * @param reference_tag Reference Location for Searching nearby Tags
      * @param toFilter Array of tags to filter through; if toFilter is undefined, #storage is used
      * @returns {entries[]} Returns entries of toFilter near to reference_tag
@@ -112,7 +126,12 @@ class InMemoryGeoTagStore {
         return entries;
     }
 
-
+    /**
+     * Method to filter an Array of GeoTags. Filters for Geotags including a search term.
+     * @param term
+     * @param toFilter
+     * @returns {*[]}
+     */
     filterForSearchTerm(term, toFilter = this.#storage) {
 
         let entries = [];
@@ -128,10 +147,17 @@ class InMemoryGeoTagStore {
         return entries;
     }
 
+    /**
+     * Method to get the whole container.
+     * @returns {*[]} Returns a JSON Object Array
+     */
     get getAll() {
         return this.#storage;
     }
 
+    /**
+     * Loading the Example Entries
+     */
     loadEntries() {
         GeoTagExamples.tagList.forEach((tagList) => {
             let tag = new GeoTag(tagList[0], tagList[1], tagList[2], tagList[3])
