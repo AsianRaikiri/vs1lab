@@ -49,13 +49,12 @@ export function updateLocation() {
     }
 
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
-
+    
     setTimeout(function () {
         image_view.src = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value, tags, getZoom());
     }, 1000);
 
-    /* Zugriff auf src von <img src=""> mit image_view.src = ... */
-    /* Zugriff auf die long und lat für die MAP über disc_hidden_lat.value. Analog beim anderen auch*/
+    return false;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -74,3 +73,28 @@ function getZoom() {
     let zoomSlider = document.getElementById("zoomSlider_input");
     return zoomSlider.value;
 }
+
+const taggingForm = document.getElementById("tag-form");
+taggingForm.addEventListener('submit', () => {
+    validateTaggingForm(taggingForm.name_field_name.value, taggingForm.hashtag_field_name.value);
+});
+
+const discoveryForm = document.getElementById("discoveryFilterForm");
+discoveryForm.addEventListener('submit', () => {
+    validateDiscorveryForm(discoveryForm.discovery_field_name.value);
+});
+
+function validateTaggingForm(name, hash){
+    if(name.length <= 10 && /^#[A-Za-z]{1,10}$/.test(hash)){
+        updateLocation();
+    }
+    return false;
+}
+
+function validateDiscorveryForm(name){
+    if(name.length <=10){
+        updateLocation();
+    }
+    return false;
+}
+
