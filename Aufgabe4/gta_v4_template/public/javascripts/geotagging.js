@@ -48,6 +48,13 @@ export function updateLocation() {
         tags = JSON.parse(dataTags);
     }
 
+    fetch("/api/geotags/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify()
+    })
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
     
     setTimeout(function () {
@@ -81,20 +88,60 @@ taggingForm.addEventListener('submit', () => {
 
 const discoveryForm = document.getElementById("discoveryFilterForm");
 discoveryForm.addEventListener('submit', () => {
-    validateDiscorveryForm(discoveryForm.discovery_field_name.value);
+    validateDiscoveryForm(discoveryForm.discovery_field_name.value);
 });
 
 function validateTaggingForm(name, hash){
     if(name.length <= 10 && /^#[A-Za-z]{1,10}$/.test(hash)){
-        updateLocation();
+        postTagging();
     }
     return false;
 }
 
-function validateDiscorveryForm(name){
+function validateDiscoveryForm(name){
     if(name.length <=10){
-        updateLocation();
+        getDiscovery();
     }
     return false;
 }
 
+function getDiscovery(){
+    let disc_hidden_long = document.getElementById("discovery_hidden_longitude");
+    let disc_hidden_lat = document.getElementById("discovery_hidden_latitude");
+    let disc_name = document.getElementById("disc_name");
+
+    let ReqBody = {
+        longtitude: disc_hidden_long,
+        latitude: disc_hidden_lat,
+        searchterm: disc_name
+    }
+    fetch("/api/geotags/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        query: JSON.stringify(ReqBody)
+    })
+}
+
+function postTagging(){
+    let tag_long = document.getElementById("long");
+    let tag_lat = document.getElementById("lat");
+    let tag_name = document.getElementById("name");
+    let tag_hash = document.getElementById("hash");
+
+    let reqBody = {
+        name: tag_name,
+        longtitude: tag_long,
+        latitdude: tag_lat,
+        hashtag: tag_hash,
+    }
+
+    fetch("/api/geotags/", {
+        method: "POST",
+        body: JSON.stringify(reqBody),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+}
