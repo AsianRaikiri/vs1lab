@@ -228,6 +228,15 @@ main {
   width: 100%;
 }
 
+.discovery__taglist {
+  display: grid;
+  margin: 1rem;
+}
+
+.container {
+  position: relative;
+}
+
 /* ... Styling Parent Element of Discovery Map and Results ... */
 .discovery__wrapper .row {
   justify-content: start;
@@ -236,6 +245,11 @@ main {
 .discovery__layout {
   margin: 1rem 0.5rem 0 0.5rem;
 }
+
+.container {
+  position: relative;
+}
+
 
 
 /* ### TODO ### Styles for Footer Component */

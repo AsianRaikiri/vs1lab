@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
   res.render('index', { taglist: [], tagsjson: '', lat: 0, long: 0});
 });
 
-router.post('/discovery', (req, res) => {
+/*router.post('/discovery', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
   let entries = (store.searchNearbyGeoTags(new GeoTag(body.discovery_field_name, body.discovery_hidden_latitude, body.discovery_hidden_longitude, '')));
   res.render('index', {taglist: entries, tagsjson: JSON.stringify(entries), lat: body.latitude_field_name, long: body.longitude_field_name});
@@ -43,7 +43,7 @@ router.post('/tagging', (req, res) => {
   let body = JSON.parse(JSON.stringify(req.body));
   store.addGeoTag(new GeoTag(body.name_field_name,  body.latitude_field_name, body.longitude_field_name,  body.hashtag_field_name));
   res.render('index', {taglist: [], tagsjson: '', lat: body.latitude_field_name, long: body.longitude_field_name});
-});
+});*/
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -72,17 +72,19 @@ router.get('/', (req, res) => {
  */
 
 router.get('/api/geotags', (req, res) => {
-  let longtitudeQuery = req.query.longitude;
+  let longitudeQuery = req.query.longitude;
   let latitudeQuery = req.query.latitude;
   let searchTermQuery = req.query.searchterm;
 
+  let referenceTag = new GeoTag('', latitudeQuery,longitudeQuery, '');
+
   let filtered = store.filterForSearchTerm(searchTermQuery);
 
-  if(longtitudeQuery != null && latitudeQuery != null) {
-    filtered = store.filterNearbyGeoTags(new GeoTag('', latitudeQuery,longtitudeQuery))
+  if(longitudeQuery != null && latitudeQuery != null) {
+    filtered = store.filterNearbyGeoTags(referenceTag);
   }
 
-  res.status(200).json(filtered);
+  res.status(200).json((filtered));
 });
 
 /**
@@ -99,8 +101,8 @@ router.get('/api/geotags', (req, res) => {
 // TODO: ... your code here ...
 router.post('/api/geotags', (req, res) => {
   let name = req.body.name;
-  let long = parseFloat(req.body.longitude);
-  let lat = parseFloat(req.body.latitude);
+  let long = Number.parseFloat(String(req.body.longitude));
+  let lat = Number.parseFloat(String(req.body.latitude));
   let hashtag = req.body.hashtag;
 
   let newEntry = new GeoTag(name, lat, long, hashtag);
@@ -178,6 +180,22 @@ router.delete('/api/geotags/:id', (req, res) => {
   store.removeGeoTag(id);
 
   res.status(202).json(deleted);
+});
+
+router.get('/api/geotags/page/:id', (req, res) => {
+  let page = parseInt(req.params.id);
+
+  let longitudeQuery = req.query.longitude;
+  let latitudeQuery = req.query.latitude;
+  let searchTermQuery = req.query.searchterm;
+
+  let filtered = store.filterForSearchTerm(searchTermQuery);
+
+  if(longitudeQuery != null && latitudeQuery != null) {
+    filtered = store.filterNearbyGeoTags(new GeoTag('', latitudeQuery,longitudeQuery))
+  }
+
+  res.status(200).json(store.getGeoTagsByPage(page, filtered));
 });
 
 module.exports = router;

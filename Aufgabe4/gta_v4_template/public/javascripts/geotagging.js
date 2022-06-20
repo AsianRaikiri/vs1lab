@@ -13,7 +13,9 @@ import { MapManager } from './map-manager.js';
  * It is called once the page has been fully loaded.
  */
 
-export function updateLocation() {
+const paging = true;
+
+export async function updateLocation() {
 
     /* Input Field Variables */
     let disc_hidden_long = document.getElementById("discovery_hidden_longitude");
@@ -44,24 +46,22 @@ export function updateLocation() {
 
     let dataTags = image_view.getAttribute('data-tags');
     let tags = [];
-    if(dataTags.length > 0) {
+    if (dataTags.length > 0) {
         tags = JSON.parse(dataTags);
     }
-
-    fetch("/api/geotags/", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify()
-    })
     let manager = new MapManager('f64689zc2fhvhu0miIiVlLaUAchTYDWv');
-    
     setTimeout(function () {
         image_view.src = manager.getMapUrl(disc_hidden_lat.value, disc_hidden_long.value, tags, getZoom());
     }, 1000);
-
     return false;
+}
+
+function updateGeoTags(tags) {
+    let list = "";
+    for (let tag of tags) {
+        list += "<li> " + tag.name + " ( " + tag.latitude + "," + tag.longitude + " ) " + tag.hashtag + "</li>"
+    }
+    document.getElementById("discoveryResults").innerHTML = list;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -76,72 +76,81 @@ document.getElementById("button_refresh").addEventListener('click', () => {
     updateLocation();
 });
 
+document.getElementById("next_page").addEventListener('click', function (evt) {
+    evt.preventDefault();
+    let query = {
+        longitude: document.getElementById("discovery_hidden_longitude").value,
+        latitude: document.getElementById("discovery_hidden_latitude").value,
+        searchterm: document.getElementById("disc_name").value
+    }
+    let page = parseInt(document.getElementById("page").value);
+
+    getGeoTagsByPage(query, page+1).then(updateList).then(updateGeoTags);
+});
+
+document.getElementById("prev_page").addEventListener('click', function (evt) {
+    evt.preventDefault();
+    let query = {
+        longitude: document.getElementById("discovery_hidden_longitude").value,
+        latitude: document.getElementById("discovery_hidden_latitude").value,
+        searchterm: document.getElementById("disc_name").value
+    }
+    let page = parseInt(document.getElementById("page").value);
+
+    getGeoTagsByPage(query, page-1).then(updateList).then(updateGeoTags);
+});
+
 function getZoom() {
     let zoomSlider = document.getElementById("zoomSlider_input");
     return zoomSlider.value;
 }
 
-const taggingForm = document.getElementById("tag-form");
-taggingForm.addEventListener('submit', () => {
-    validateTaggingForm(taggingForm.name_field_name.value, taggingForm.hashtag_field_name.value);
+function updateList(geotags) {
+   return geotags;
+}
+
+document.getElementById("discoveryFilterForm").addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    let query = {
+        longitude: document.getElementById("discovery_hidden_longitude").value,
+        latitude: document.getElementById("discovery_hidden_latitude").value,
+        searchterm: document.getElementById("disc_name").value
+    }
+
+    console.log(query);
+
+    if(paging) getGeoTagsByPage(query, 1).then(updateList).then(updateGeoTags);
+    else getGeoTags(query).then(updateList).then(updateGeoTags);
 });
 
-const discoveryForm = document.getElementById("discoveryFilterForm");
-discoveryForm.addEventListener('submit', () => {
-    validateDiscoveryForm(discoveryForm.discovery_field_name.value);
+document.getElementById("tag-form").addEventListener("submit", function (evt) {
+    evt.preventDefault();
+
+    let geotag = {
+        name: document.getElementById("name").value,
+        latitude: document.getElementById("lat").value,
+        longitude: document.getElementById("long").value,
+        hashtag: document.getElementById("hash").value
+    }
+
+    postGeoTag(geotag).then(updateLocation);
 });
 
-function validateTaggingForm(name, hash){
-    if(name.length <= 10 && /^#[A-Za-z]{1,10}$/.test(hash)){
-        postTagging();
-    }
-    return false;
-}
-
-function validateDiscoveryForm(name){
-    if(name.length <=10){
-        getDiscovery();
-    }
-    return false;
-}
-
-function getDiscovery(){
-    let disc_hidden_long = document.getElementById("discovery_hidden_longitude");
-    let disc_hidden_lat = document.getElementById("discovery_hidden_latitude");
-    let disc_name = document.getElementById("disc_name");
-
-    let ReqBody = {
-        longtitude: disc_hidden_long,
-        latitude: disc_hidden_lat,
-        searchterm: disc_name
-    }
-    fetch("/api/geotags/", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        query: JSON.stringify(ReqBody)
-    })
-}
-
-function postTagging(){
-    let tag_long = document.getElementById("long");
-    let tag_lat = document.getElementById("lat");
-    let tag_name = document.getElementById("name");
-    let tag_hash = document.getElementById("hash");
-
-    let reqBody = {
-        name: tag_name,
-        longtitude: tag_long,
-        latitdude: tag_lat,
-        hashtag: tag_hash,
-    }
-
-    fetch("/api/geotags/", {
+async function postGeoTag(geotag) {
+    let response = await fetch("http://localhost:3000/api/geotags", {
         method: "POST",
-        body: JSON.stringify(reqBody),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(geotag),
+    });
+    return await response.json();
+}
+
+async function getGeoTags(query) {
+    let response = await fetch("http://localhost:3000/api/geotags?latitude=" + query.latitude + "&longitude=" + query.longitude + "&searchterm=" + query.searchterm);
+    return await response.json();
+}
+
+async function getGeoTagsByPage(query, page) {
+    let response = await fetch("http://localhost:3000/api/geotags/page/" + page + "/?latitude=" + query.latitude + "&longitude=" + query.longitude + "&searchterm=" + query.searchterm);
+    return await response.json();
 }

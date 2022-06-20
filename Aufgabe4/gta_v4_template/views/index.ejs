@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!-- File origin: VS1LAB A1a -->
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <link rel="icon" href="./public/images/favicon.ico">
@@ -28,7 +28,7 @@
                 <h2>Tagging</h2>
 
                 <!-- ############### VS1Lab 1a Form 1 Start -->
-                <form id="tag-form" action="/tagging" method="post">
+                <form id="tag-form">
                     <!-- ... your code here ... -->
                     <fieldset id ="tag_fieldset">
                         <legend>Add a new GeoTag</legend>
@@ -47,7 +47,7 @@
 
                         <div class="button-field">
                             <input type="button" value="Refresh" id="button_refresh">
-                            <input type="submit" value="Add Tag"/>
+                            <input type="submit" value="Add Tag" id="submit_geotag"/>
                         </div>
 
                     </fieldset>
@@ -61,7 +61,7 @@
                 <h2 class="discovery__title">Discovery</h2>
 
                 <!-- ############### VS1Lab 1a Form 2 Start -->
-                <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
+                <form class="discovery__search" id="discoveryFilterForm">
 
                     <!-- ... your code here ... -->
                     <fieldset id="disc_fieldset">
@@ -85,8 +85,8 @@
 
                 <div class="discovery__wrapper">
                     <div class="row">
-                        <div class="col-8 discovery__map">
-                            <div class="col-12">
+                        <div class="col-8">
+                            <div class="discovery__map">
                                 <img src="./public/images/mapview.jpg" alt="a map with locations" id="mapView" data-tags="<%= tagsjson %>"/>
                                 <div class="zoom-Slider">
                                     <label for="zoomSlider_input">Zoom</label>
@@ -94,13 +94,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 discovery__taglist">
-                            <div style="overflow-y: scroll; margin-top: 1rem; height: 20rem;">
+                        <div class="col-5 container">
+                            <div class="discovery__taglist">
                                 <ul class="discovery__results" id="discoveryResults">
                                     <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
                                         <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
                                     <% }); %>
                                 </ul>
+                            </div>
+                            <div class="page_btn_field">
+                                <div class="row">
+                                    <input type="button" id="prev_page" value="Previous"></button>
+                                    <input type="button" id="page" value="1"></button>
+                                    <input type="button" id="next_page" value="Next"></button>
+                                </div>
                             </div>
                         </div>
                     </div>

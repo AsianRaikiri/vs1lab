@@ -1,6 +1,12 @@
 //GET all GeoTags
 GET http://localhost:3000/api/geotags
 Accept: application/json
+
+###
+
+GET http://localhost:3000/api/geotags?longitude=8.41372&latitude=49.00109&searchterm=#
+Accept: application/json
+
 ###
 
 //POST one GeoTag
@@ -47,6 +53,11 @@ GET http://localhost:3000/api/geotags?latitude=49.15528&longitude=8.62126
 
 //GET all GeoTags filtered with searchterm AND location
 GET http://localhost:3000/api/geotags?searchterm=Building&latitude=48.89764&longitude=8.42654
+###
+
+//GET Site 1
+GET http://localhost:3000/api/geotags/page/1
+Accept: application/json
 ###
 
 POST http://localhost:3000/api/geotags/page/1

@@ -51,6 +51,26 @@ class InMemoryGeoTagStore {
         this.#storage = diff;
     }
 
+
+    /**
+     * Get Entries from a specific site
+     * @param site
+     * @param GeoTags
+     * @returns {*[]} returns an Array of Geotags of chosen site
+     */
+    getGeoTagsByPage(site, GeoTags = this.#storage) {
+        let entries = [];
+        for(let i = (site-1)*4; i<=((site-1)*4)+3; i++) {
+            let entry = GeoTags[i];
+            if(entry != null) {
+                entries.push(entry);
+            }else {
+                break;
+            }
+        }
+        return entries;
+    }
+
     /**
      *
      * @param tag Wants an GeoTag obj Param
@@ -92,7 +112,6 @@ class InMemoryGeoTagStore {
         return this.#storage.find(value => parseInt(value.id) === parseInt(id));
     }
 
-
     searchNearbyGeoTags(entry_tag) {
         return this.filterForSearchTerm(entry_tag.name, this.filterNearbyGeoTags(entry_tag, this.#storage));
     }
@@ -117,6 +136,7 @@ class InMemoryGeoTagStore {
 
         let entries = [];
         toFilter.forEach((value, index, array) => {
+            console.log("Reference-Tag: ", reference_tag);
             let longitude_difference = value.longitude - reference_tag.longitude;
             let latitude_difference = value.latitude - reference_tag.latitude;
             if(Math.sqrt(Math.pow(longitude_difference, 2) + Math.pow(latitude_difference, 2)) <= this.rad) {

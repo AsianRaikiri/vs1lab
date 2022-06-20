@@ -270,6 +270,37 @@ main {
   margin: 1rem 0.5rem 0 0.5rem;
 }
 
+.pagination {
+  display: inline-block;
+}
+
+.pagination input {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination input.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+.container {
+  margin: 1rem;
+  position: relative;
+}
+
+.page_btn_field {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.page_btn_field .row input {
+  margin: 0 0.2rem;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
