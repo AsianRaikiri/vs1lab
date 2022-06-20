@@ -58,9 +58,10 @@ class InMemoryGeoTagStore {
      * @param GeoTags
      * @returns {*[]} returns an Array of Geotags of chosen site
      */
+    TagsPerSite = 5;
     getGeoTagsByPage(site, GeoTags = this.#storage) {
         let entries = [];
-        for(let i = (site-1)*4; i<=((site-1)*4)+3; i++) {
+        for(let i = (site-1)*this.TagsPerSite; i<=((site-1)*this.TagsPerSite)+(this.TagsPerSite-1); i++) {
             let entry = GeoTags[i];
             if(entry != null) {
                 entries.push(entry);

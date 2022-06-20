@@ -96,18 +96,24 @@
                         </div>
                         <div class="col-5 container">
                             <div class="discovery__taglist">
-                                <ul class="discovery__results" id="discoveryResults">
-                                    <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-                                        <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
-                                    <% }); %>
-                                </ul>
-                            </div>
-                            <div class="page_btn_field">
                                 <div class="row">
-                                    <input type="button" id="prev_page" value="Previous"></button>
-                                    <input type="button" id="page" value="1"></button>
-                                    <input type="button" id="next_page" value="Next"></button>
+                                    <ul class="discovery__results" id="discoveryResults">
+                                        <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
+                                            <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                                        <% }); %>
+                                    </ul>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <div class="col-5 container">
+                            <div class="page_btn_field">
+                                <input type="button" id="prev_page" value="Previous"></button>
+                                <input type="button" id="page" value="1"></button>
+                                <input type="button" id="next_page" value="Next"></button>
                             </div>
                         </div>
                     </div>

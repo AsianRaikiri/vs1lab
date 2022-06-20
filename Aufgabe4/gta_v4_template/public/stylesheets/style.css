@@ -239,7 +239,7 @@ main {
 
 /* ... Result-List-Item styling ... */
 .discovery__results li {
-  margin: 1rem 0 ;
+  margin: 0.2rem 0 ;
   padding: 1rem;
   background-color: #EFEFEF;
   color: #0097CF;
@@ -286,19 +286,17 @@ main {
   color: white;
 }
 
-
 .container {
   margin: 1rem;
   position: relative;
 }
 
 .page_btn_field {
+  display: flex;
   width: 100%;
-  position: absolute;
-  bottom: 0;
 }
 
-.page_btn_field .row input {
+.page_btn_field input {
   margin: 0 0.2rem;
 }
 
