@@ -145,8 +145,8 @@ document.getElementById("discoveryFilterForm").addEventListener('submit', functi
 
     console.log(query);
 
-    if(paging) getGeoTagsByPage(query, 1).then(updateList).then(updateGeoTags);
-    else getGeoTags(query).then(updateList).then(updateGeoTags);
+    if(paging) getGeoTagsByPage(query, 1).then(updateGeoTags);
+    else getGeoTags(query).then(updateGeoTags);
 });
 
 document.getElementById("tag-form").addEventListener("submit", function (evt) {

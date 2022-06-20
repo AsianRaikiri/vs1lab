@@ -55,7 +55,7 @@ router.post('/tagging', (req, res) => {
  */
 
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  res.render('index', { taglist: [] });
 });
 
 // API routes (A4)
@@ -98,7 +98,6 @@ router.get('/api/geotags', (req, res) => {
  * The new resource is rendered as JSON in the response.
  */
 
-// TODO: ... your code here ...
 router.post('/api/geotags', (req, res) => {
   let name = req.body.name;
   let long = Number.parseFloat(String(req.body.longitude));
